@@ -14,12 +14,12 @@ def menu():
     return input(textwrap.dedent(menu))
 
 def depositar(saldo, valor, extrato, /): #chamadas por posição
-    if valor > 0:
+    if(not valor<=0):
         saldo+=valor
-        extrato+= f"Depósito: \tR$ {valor:.2f}\n"
-        print("\n ||||| Depósito realizado com sucesso! |||||")
+        extrato.append(f"Depósito: R${valor:.2f}")
+        print("\n ***** Depósito realizado com sucesso! *****")
     else:
-        print("\n ### Operação falhou! O valor informado é inválido. ###")
+        print("\n ### Operação falhou! Valor para depósito inválido. ###")
     
     return saldo, extrato
 
@@ -35,9 +35,9 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques): #O ca
     
     elif valor > 0:
         saldo -= valor
-        extrato += f"Saque:\t\tR$ {valor:.2f}\n"
+        extrato.append(f"Saque: R${saldo:.2f}")
         numero_saques+=1
-        print("\n ||||| Saque realizado com sucesso! |||||")
+        print("\n ***** Saque realizado com sucesso! *****")
     
     else:
         print("\n### Operação falhou! O valor informado é inválido. ###")
@@ -46,9 +46,13 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques): #O ca
 
 def exibir_extrato(saldo,/,*,extrato): #saldo é posicional e o argumento extrato é nomeado
     print("\n ================ EXTRATO ================")
-    print("Não foram realizadas movimentações." if not extrato else extrato)
-    print(f"\nSaldo:\t\tR${saldo:.2f}")
-    print("\n =========================================")
+    if (len(extrato) == 0):
+        print("Não foram realizadas movimentações.")
+    else:
+        for i in extrato:
+            print(i)
+        print(f"Saldo: R${saldo:.2f}")
+    print("=========================================")
 
 def criar_usuario(usuarios):
     cpf = input("Informe o CPF (somente número): ")
@@ -64,7 +68,7 @@ def criar_usuario(usuarios):
 
     usuarios.append({"nome":nome, "data_nascimento":data_nasc, "cpf":cpf, "endereco": end})
 
-    print("\n ||||| Usuário criado com sucesso! |||||")
+    print("\n ***** Usuário criado com sucesso! *****")
 
 def filtrar_usuario(cpf,usuarios):
     usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"]==cpf]
@@ -75,7 +79,7 @@ def criar_conta(agencia, num_conta, usuarios):
     usuario = filtrar_usuario(cpf, usuarios)
 
     if usuario:
-        print("\n ||||| Conta criada com sucesso! |||||")
+        print("\n ***** Conta criada com sucesso! *****")
         return {"agencia":agencia, "num_conta": num_conta, "usuario":usuario}
     
     print("\n #### Usuario não encontrado, fluxo de criação de conta encerrado! ####")
@@ -97,7 +101,7 @@ def main():
 
     saldo = 0
     limite = 500
-    extrato = ""
+    extrato = []
     numero_saques = 0
     usuarios = []
     contas = []
