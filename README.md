@@ -1,4 +1,4 @@
-# 🚀 Projetos do Bootcamp Backend com Python  
+# 🚀 Projetos do Bootcamp Santander - Backend com Python  
 
 Este repositório reúne projetos e desafios desenvolvidos durante o **Bootcamp de Backend com Python**, promovido pela **DIO em parceria com o Santander**.  
 
